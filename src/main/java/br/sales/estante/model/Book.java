@@ -1,8 +1,11 @@
 package br.sales.estante.model;
 
+import lombok.Data;
+import lombok.Getter;
+
 import java.util.UUID;
 
-
+@Data
 public class Book {
 
     private UUID id;
@@ -13,11 +16,4 @@ public class Book {
 //    private CreativeTeam creativeTeam;
 //    private Country country;
 
-    public UUID getId() {
-        return this.id;
-    }
-
-    public String getTitle() {
-        return this.title;
-    }
 }
