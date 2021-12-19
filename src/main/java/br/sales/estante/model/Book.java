@@ -1,12 +1,14 @@
 package br.sales.estante.model;
 
-import lombok.Data;
-import lombok.Getter;
+import lombok.*;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.util.UUID;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Schema(description = "Objeto que representa o livro")
 public class Book {
 
