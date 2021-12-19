@@ -38,22 +38,37 @@ public class BooksController {
     @POST
     @Operation(description = "API que grava livro")
     @APIResponses(value = {
-            @APIResponse(description = "Retorna 200 para sucesso", responseCode = "200"),
+            @APIResponse(description = "Retorna 201 para sucesso", responseCode = "200"),
             @APIResponse(description = "retorna 404 se não encontrar nenhum", responseCode = "404")
     })
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response save(BookDto dto) {
 
         var book = Book.builder().title(dto.getTitle()).build();
 
         var optionalbook = bookSerice.save(book);
 
-        var uri = URI.create("/save");
-
         if (optionalbook.isEmpty()) {
             throw new NotFoundException("Não foi possível gravar");
         }
+        var uri = URI.create("/v1/books/".concat(optionalbook.get().getId().toString()));
+
         return Response.created(uri).build();
+    }
+
+    @GET
+    @Path("/{uuid}")
+    @Operation(description = "API que retorna um livro")
+    @APIResponses(value = {
+            @APIResponse(description = "Retorna 200 para sucesso", responseCode = "200"),
+            @APIResponse(description = "retorna 404 se não encontrar nenhum", responseCode = "404")
+    })
+    @Produces(MediaType.APPLICATION_JSON)
+    public Book find(@PathParam("uuid") String uuid) {
+
+        var optionalBook = bookSerice.find(uuid);
+        return optionalBook.orElseThrow(() -> new NotFoundException("Livro não encontrado"));
     }
 
 }

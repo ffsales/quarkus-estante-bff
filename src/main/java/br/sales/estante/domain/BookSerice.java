@@ -41,4 +41,17 @@ public class BookSerice {
 
         return Optional.empty();
     }
+
+    public Optional<Book> find(String uuid) {
+
+        var response = redisClient.get(uuid);
+        if (Objects.nonNull(response)) {
+            try {
+                return Optional.of(new ObjectMapper().readValue(response.toString(), Book.class));
+            } catch (JsonProcessingException e) {
+                return Optional.empty();
+            }
+        }
+        return Optional.empty();
+    }
 }
