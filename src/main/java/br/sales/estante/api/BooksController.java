@@ -71,4 +71,19 @@ public class BooksController {
         return optionalBook.orElseThrow(() -> new NotFoundException("Livro não encontrado"));
     }
 
+    @DELETE
+    @Path("/{uuid}")
+    @Operation(description = "API que deleta um livro")
+    @APIResponses(value = {
+            @APIResponse(description = "Retorna 204 para sucesso", responseCode = "200"),
+            @APIResponse(description = "retorna 404 se não encontrar nenhum", responseCode = "404")
+    })
+    public Response delete(@PathParam("uuid") String uuid) {
+        final boolean deletado = bookSerice.delete(uuid);
+        if (deletado) {
+            return Response.noContent().build();
+        }
+        throw new NotFoundException("Livro não encontrado");
+    }
+
 }

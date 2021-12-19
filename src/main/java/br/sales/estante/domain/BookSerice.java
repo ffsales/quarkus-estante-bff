@@ -54,4 +54,17 @@ public class BookSerice {
         }
         return Optional.empty();
     }
+
+    @Transactional
+    @NonBlocking
+    public boolean delete(String uuid) {
+
+        final Optional<Book> optionalBook = find(uuid);
+        if (optionalBook.isPresent()) {
+            redisClient.del(Collections.singletonList(uuid));
+            return true;
+        }
+        return false;
+
+    }
 }
