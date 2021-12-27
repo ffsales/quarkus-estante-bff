@@ -8,4 +8,6 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 public class BookDto {
 
     private String title;
+    private String genre;
+    private String country;
 }

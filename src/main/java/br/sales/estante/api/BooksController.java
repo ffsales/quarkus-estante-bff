@@ -44,10 +44,7 @@ public class BooksController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response save(BookDto dto) {
-
-        var book = Book.builder().title(dto.getTitle()).build();
-
-        var optionalbook = bookSerice.save(book);
+        var optionalbook = bookSerice.save(dto);
 
         if (optionalbook.isEmpty()) {
             throw new NotFoundException("Não foi possível gravar");

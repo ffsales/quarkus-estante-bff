@@ -16,10 +16,12 @@ public class Book {
     private UUID id;
     @Schema(description = "Título do livro")
     private String title;
-//    private Genre genre;
+    @Schema(description = "Gênero do livro")
+    private String genre;
 //    private Publishing publishing;
 //    private Publishing licensor;
 //    private CreativeTeam creativeTeam;
-//    private Country country;
+    @Schema(description = "País de origem do livro")
+    private String country;
 
 }

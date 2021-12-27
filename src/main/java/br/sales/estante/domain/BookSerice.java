@@ -1,5 +1,6 @@
 package br.sales.estante.domain;
 
+import br.sales.estante.dto.BookDto;
 import br.sales.estante.model.Book;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,9 +28,15 @@ public class BookSerice {
 
     @Transactional
     @NonBlocking
-    public Optional<Book> save(Book book) {
+    public Optional<Book> save(BookDto bookDto) {
 
-        book.setId(UUID.randomUUID());
+        var book = Book.builder()
+                .id(UUID.randomUUID())
+                .title(bookDto.getTitle())
+                .genre(bookDto.getGenre())
+                .country(bookDto.getCountry())
+                .build();
+
         try {
             String bookPayload = new ObjectMapper().writeValueAsString(book);
             redisClient.append(book.getId().toString(), bookPayload);
